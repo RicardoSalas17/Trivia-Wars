@@ -117,6 +117,7 @@ const generateTrivia = () => {
         let dataGet= response.data.results
         const trivia = new Trivia(dataGet, difficultySelect);
         trivia.questionsGen();
+        menuOut();
         })
         .catch(function (error) {
             alert('Error!');
@@ -132,6 +133,13 @@ const showMenu = () => {
     body.appendChild(category);
     body.appendChild(buttonGenerateStart);
     buttonGenerateStart.addEventListener("click", generateTrivia);
+    }
+    //MenuOut
+const menuOut = () => {
+    body.removeChild(type);
+    body.removeChild(category);
+    body.removeChild(difficulty);
+    body.removeChild(buttonGenerateStart);
     }
 
 //Init Game

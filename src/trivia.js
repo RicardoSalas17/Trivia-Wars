@@ -32,14 +32,30 @@ class Trivia {
                 difficultyChose:this.difficulty,
                 difficultyOfQuestion:element.difficulty,
                 time:timeDif,
+                points:100
             }
             numb ++
             index++
         })
-        this.prueba()
+        this.showTrivia()
     }
-    prueba(){
-        console.log(this.round)
+    showTrivia(){
+        const questionContainer = document.createElement("div");
+        const questionText = document.createElement("h1");
+        window.body.appendChild(questionContainer);
+        questionText.innerHTML = `${this.round[0].number}: ${this.round[0].question}`;
+        questionContainer.appendChild(questionText);
+
+        let indAns
+        this.round[0].answers.forEach(ans=>{
+            indAns = document.createElement("button");
+            indAns.innerHTML = `${ans}`
+            questionContainer.appendChild(indAns);
+        })
+
+
+
+        // buttonStars.addEventListener("click", window.showMenu);
     }
 
 
