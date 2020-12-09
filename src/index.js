@@ -1,13 +1,6 @@
 import './styles/main.scss';
 import axios from 'axios';
 
-// class Trivia {
-//     constructor( trivias = [] ){
-
-//     }
-//     buildTrivia(url){}
-// }
-
 //Init
 var body = document.getElementById("body");
 var buttonStart = document.createElement("button");
@@ -60,8 +53,18 @@ const categoryList = () =>{
         category.appendChild(anyCategory);
             categories.forEach(element => {
                 allCategoriesList[indexCategory] = document.createElement("option");
-                allCategoriesList[indexCategory].value = `${indexCategory}`;
-                allCategoriesList[indexCategory].innerHTML = `${element.name}`;
+                allCategoriesList[indexCategory].value = indexCategory;
+                let categoryName
+                    if(element.name.includes("Entertainment")){
+                    categoryName =element.name.replace("Entertainment: ", "");
+                    }
+                    else if(element.name.includes("Science")){
+                    categoryName =element.name.replace("Science: ", "");
+                    }
+                    else{
+                    categoryName =element.name;
+                    }
+                allCategoriesList[indexCategory].innerHTML = `${categoryName}`;
                 category.appendChild(allCategoriesList[indexCategory]);
                 indexCategory++
             });
@@ -77,22 +80,40 @@ categoryList();
 var buttonGenerateStart = document.createElement("button");
 buttonGenerateStart.innerHTML = "Let It Be";
 const generateTrivia = () => {
-    let dificultySelect=dificulty.value.toLowerCase();
+    let categorySelect=Number(category.value);
     let typeSelect=type.value.toLowerCase();
-    let categorySelectFail=category.value;
-    let categorySelect;
-    if(categorySelectFail.includes("Entertainment")){
-        categorySelect =categorySelectFail.replace("Entertainment: ", "").toLowerCase();
+    let dificultySelect=dificulty.value.toLowerCase();
+    let URL_GEN
+    const urlGenerator = () => {
+     if(typeSelect == "any" && dificultySelect == "any" && categorySelect == 0){
+        URL_GEN = `https://opentdb.com/api.php?amount=10`
     }
-    else if(categorySelectFail.includes("Science")){
-        categorySelect =categorySelectFail.replace("Science: ", "").toLowerCase();
+    else if(categorySelect == 0 && typeSelect == "any"){
+        URL_GEN = `https://opentdb.com/api.php?amount=10&difficulty=${dificultySelect}`
+    }
+    else if(categorySelect == 0 && dificultySelect == "any"){
+        URL_GEN = `https://opentdb.com/api.php?amount=10&type=${typeSelect}`
+    }
+    else if(typeSelect == "any" && dificultySelect == "any"){
+        URL_GEN = `https://opentdb.com/api.php?amount=10&category=${categorySelect}`
+    }
+     else if(categorySelect == 0){
+        URL_GEN =`https://opentdb.com/api.php?amount=10&difficulty=${dificultySelect}&type=${typeSelect}`;
+    }
+     else if(typeSelect == "any"){
+        URL_GEN = `https://opentdb.com/api.php?amount=10&category=${categorySelect}&difficulty=${dificultySelect}`;
+    }
+     else if(dificultySelect =="any"){
+        URL_GEN = `https://opentdb.com/api.php?amount=10&category=${categorySelect}&type=${typeSelect}`;
     }
     else{
-        categorySelect =categorySelectFail.toLowerCase();
+        URL_GEN =`https://opentdb.com/api.php?amount=10&category=${categorySelect}&difficulty=${dificultySelect}&type=${typeSelect}`;
     }
-    console.log('Select: ', categorySelect, typeSelect,dificultySelect);
 }
-    
+ urlGenerator()
+    console.log('URL_GEN: ', URL_GEN);
+}
+
 
 const showMenu = () => {
     body.removeChild(buttonStart);
