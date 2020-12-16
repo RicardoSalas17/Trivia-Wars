@@ -1,64 +1,114 @@
+const questionContainer = document.createElement("div");
 class Trivia {
-    constructor(trivia = [], difficulty){
-        this.trivia = trivia;
-        this.difficulty = difficulty;
-        this.round=[]
-        this.marker
+  constructor(trivia = [], difficulty) {
+    this.trivia = trivia;
+    this.difficulty = difficulty;
+    this.round = [];
+    this.marker = 0;
+    this.questionShow = 0;
+  }
+  questionsGen() {
+    let numb = 1;
+    let index = 0;
+    let timeDif;
+    let pointDif;
+    this.trivia.forEach((element) => {
+      let listAnsw = [element.correct_answer];
+      let ind = 1;
+      element.incorrect_answers.forEach((answ) => {
+        listAnsw[ind] = answ;
+        ind++;
+      });
+      if (element.difficulty == "hard") {
+        timeDif = 0.1;
+        pointDif = 100;
+      } else if (element.difficulty == "easy") {
+        timeDif = 1;
+        pointDif = 200;
+      } else if (element.difficulty == "medium") {
+        timeDif = 0.5;
+        pointDif = 150;
+      }
+      this.round[index] = {
+        number: numb,
+        question: element.question,
+        answers: listAnsw,
+        correctAnswer: element.correct_answer,
+        difficultyChose: this.difficulty,
+        difficultyOfQuestion: element.difficulty,
+        time: timeDif,
+        points: pointDif,
+        htmlElements: {},
+      };
+      numb++;
+      index++;
+    });
+    this.cardQuestions();
+  }
+  cardQuestions() {
+    this.round.forEach((questions) => {
+      let keyHtml = questions.htmlElements;
+      keyHtml.ansHtml = [];
+      keyHtml.hElement = document.createElement("h1");
+      keyHtml.hElement.innerHTML = `${questions.number}: ${questions.question}`;
+      questions.answers.forEach((ans) => {
+        let indAns = document.createElement("button");
+        indAns.innerHTML = `${ans}`;
+        indAns.value = `${ans}`;
+        indAns.addEventListener("click", () => {
+          this.round[this.questionShow].chooseAnswer = ans;
+          this.gameCheck(this.questionShow);
+        });
+        keyHtml.ansHtml.push(indAns);
+      });
+    });
+    this.showTrivia();
+  }
+  showTrivia() {
+    const htmlKeyH = this.round[this.questionShow].htmlElements.hElement;
+    const htmlKeyB = this.round[this.questionShow].htmlElements.ansHtml;
+    questionContainer.appendChild(htmlKeyH);
+    window.body.appendChild(questionContainer);
+    htmlKeyB.forEach((ans) => {
+      questionContainer.appendChild(ans);
+    });
+  }
+  gameCheck(ind) {
+    if (ind < this.round.length - 1) {
+      let elementKeys = this.round[ind].htmlElements;
+      let correctAnswer = this.round[ind].correctAnswer;
+      let chosenAnswer = this.round[ind].chooseAnswer;
+      let points = this.round[ind].points;
+      if (correctAnswer == chosenAnswer) {
+          console.log('chosenAnswer: ', chosenAnswer);
+          console.log('orrectAnswer: ', correctAnswer);
+          console.log("Correcto    +", points);
+          this.marker += points;
+          console.log("Marker", this.marker);
+        }else{
+            console.log('chosenAnswer: ', chosenAnswer);
+            console.log('orrectAnswer: ', correctAnswer);
+      }
+      questionContainer.removeChild(elementKeys.hElement);
+      elementKeys.ansHtml.forEach((element) => {
+        questionContainer.removeChild(element);
+      });
+      this.questionShow++;
+      this.showTrivia();
+    } else {
+      let elementKeys = this.round[ind].htmlElements;
+      questionContainer.removeChild(elementKeys.hElement);
+      elementKeys.ansHtml.forEach((element) => {
+        questionContainer.removeChild(element);
+      }) 
+      if(this.marker >= 1000){
+          console.log("WIN");
+          console.log("Marker", this.marker);
+        }else{
+            console.log("LOSE");
+            console.log("Marker", this.marker);
+      }
     }
-    questionsGen(){
-        let numb = 1
-        let index = 0
-        let timeDif
-        this.trivia.forEach(element => {
-            let listAnsw =[element.correct_answer]
-            let ind= 1
-            element.incorrect_answers.forEach(answ=>{
-            listAnsw[ind] = answ
-            ind++
-            })
-            if(element.difficulty == "hard"){
-                timeDif = .10
-            }else if(element.difficulty == "easy"){
-                timeDif = 1
-            }
-            else if(element.difficulty == "medium"){
-                timeDif = .50
-            }
-            this.round[index]= {
-                number: numb,
-                question: element.question,
-                answers: listAnsw,
-                correctAnswer: element.correct_answer,
-                difficultyChose:this.difficulty,
-                difficultyOfQuestion:element.difficulty,
-                time:timeDif,
-                points:100
-            }
-            numb ++
-            index++
-        })
-        this.showTrivia()
-    }
-    showTrivia(){
-        const questionContainer = document.createElement("div");
-        const questionText = document.createElement("h1");
-        window.body.appendChild(questionContainer);
-        questionText.innerHTML = `${this.round[0].number}: ${this.round[0].question}`;
-        questionContainer.appendChild(questionText);
-
-        let indAns
-        this.round[0].answers.forEach(ans=>{
-            indAns = document.createElement("button");
-            indAns.innerHTML = `${ans}`
-            questionContainer.appendChild(indAns);
-        })
-
-
-
-        // buttonStars.addEventListener("click", window.showMenu);
-    }
-
-
+  }
 }
-
 export default Trivia;

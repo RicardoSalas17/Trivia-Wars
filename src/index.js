@@ -150,4 +150,6 @@ const init = () => {
     }
     init();
 
+
+
     export default Trivia;
