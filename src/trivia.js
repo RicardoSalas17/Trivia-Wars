@@ -66,9 +66,24 @@ class Trivia {
   }
   showTrivia() {
     const htmlKeyH = this.round[this.questionShow].htmlElements.hElement;
-    const htmlKeyB = this.round[this.questionShow].htmlElements.ansHtml;
     questionContainer.appendChild(htmlKeyH);
     window.body.appendChild(questionContainer);
+    function shuffle(array) {
+        let currentIndex = array.length, temporaryValue, randomIndex;
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        } 
+        return array;
+    }
+    let htmlKeyB = this.round[this.questionShow].htmlElements.ansHtml;
+    shuffle(htmlKeyB); 
     htmlKeyB.forEach((ans) => {
       questionContainer.appendChild(ans);
     });
@@ -81,13 +96,14 @@ class Trivia {
       let points = this.round[ind].points;
       if (correctAnswer == chosenAnswer) {
           console.log('chosenAnswer: ', chosenAnswer);
-          console.log('orrectAnswer: ', correctAnswer);
+          console.log('correctAnswer: ', correctAnswer);
           console.log("Correcto    +", points);
           this.marker += points;
           console.log("Marker", this.marker);
         }else{
             console.log('chosenAnswer: ', chosenAnswer);
-            console.log('orrectAnswer: ', correctAnswer);
+            console.log('correctAnswer: ', correctAnswer);
+            console.log("InCorrecto ----", points);
       }
       questionContainer.removeChild(elementKeys.hElement);
       elementKeys.ansHtml.forEach((element) => {
