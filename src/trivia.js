@@ -1,6 +1,8 @@
+import finish from "./index";
 const questionContainer = document.createElement("div");
-let time= document.createElement("h1");
-let clockCounter = 1
+questionContainer.className = "qContainer";
+let time = document.createElement("h1");
+let clockCounter = 1;
 class Trivia {
   constructor(trivia = [], difficulty) {
     this.trivia = trivia;
@@ -57,6 +59,7 @@ class Trivia {
         let indAns = document.createElement("button");
         indAns.innerHTML = `${ans}`;
         indAns.value = `${ans}`;
+        indAns.className = "ansBut";
         indAns.addEventListener("click", () => {
           this.round[this.questionShow].chooseAnswer = ans;
           this.gameCheck(this.questionShow);
@@ -66,109 +69,122 @@ class Trivia {
     });
     this.showTrivia();
   }
-  timeQuestion(data){
-    let times =this.round[this.questionShow].time
-     const timer =()=> {
-      if(clockCounter == data.number){
-    if(times > 0){
-      if(times == 0){
-        times  = 59;
+  timeQuestion(data) {
+    time.className = "";
+    let times = this.round[this.questionShow].time;
+    const timer = () => {
+      if (clockCounter == data.number) {
+        if (times > 0) {
+          if (times == 0) {
+            times = 59;
+          } else {
+            times = times - 1;
+          }
+          if (times.toString().length == 1) {
+            times = "0" + times;
+          }
+          if (times <= 5) {
+            time.className = "warning";
+          }
+          time.innerHTML = times;
+          setTimeout(timer, 1000);
+        } else {
+          this.gameCheck(this.questionShow);
+        }
+      } else if (data.number == 10) {
       }
-      else{
-        times  = times  - 1;
-      }
-      if(times .toString().length == 1){
-        times  = "0" + times ;
-      }
-      time.innerHTML = times ;
-      setTimeout(timer, 1000);
-    }
-    else{
-      this.gameCheck(this.questionShow);
-    }
-  }else if(data.number == 10){ 
-  }
-  }
-   timer()
+    };
+    timer();
   }
   showTrivia() {
     const htmlKeyH = this.round[this.questionShow].htmlElements.hElement;
     questionContainer.appendChild(htmlKeyH);
     window.body.appendChild(questionContainer);
     function shuffle(array) {
-        let currentIndex = array.length, temporaryValue, randomIndex;
-        // While there remain elements to shuffle...
-        while (0 !== currentIndex) {
-            // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-            // And swap it with the current element.
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
-        } 
-        return array;
+      let currentIndex = array.length,
+        temporaryValue,
+        randomIndex;
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+      return array;
     }
     let htmlKeyB = this.round[this.questionShow].htmlElements.ansHtml;
-    shuffle(htmlKeyB); 
+    shuffle(htmlKeyB);
     htmlKeyB.forEach((ans) => {
       questionContainer.appendChild(ans);
     });
-    
+
     questionContainer.appendChild(time);
     this.timeQuestion(this.round[this.questionShow]);
   }
   gameCheck(ind) {
-    if (ind < this.round.length - 1) {
-      let elementKeys = this.round[ind].htmlElements;
-      let correctAnswer = this.round[ind].correctAnswer;
-      let chosenAnswer = this.round[ind].chooseAnswer;
-      console.log('chosenAnswer: ', chosenAnswer);
-      let points = this.round[ind].points;
-      if (correctAnswer == chosenAnswer) {
-          // console.log('chosenAnswer: ', chosenAnswer);
-          // console.log('correctAnswer: ', correctAnswer);
-          // console.log("Correcto    +", points);
-          this.marker += points;
-          // console.log("Marker", this.marker);
-        }else if(chosenAnswer===undefined){
-          // console.log("Se acabo el tiempo")
-          this.round[ind].chooseAnswer = "End Time"
+    let elementKeys = this.round[ind].htmlElements;
+    let correctAnswer = this.round[ind].correctAnswer;
+    let chosenAnswer = this.round[ind].chooseAnswer;
+    let points = this.round[ind].points;
+    if (correctAnswer == chosenAnswer) {
+      elementKeys.ansHtml.forEach((element) => {
+        if (element.value == chosenAnswer) {
+          element.className = "ansButCorrect";
+        } else {
+          element.className = "ansButInCorrect";
         }
-        else{
-            // console.log('chosenAnswer: ', chosenAnswer);
-            // console.log('correctAnswer: ', correctAnswer);
-            // console.log("InCorrecto ----", points);
-      }
-      questionContainer.removeChild(elementKeys.hElement);
-      questionContainer.removeChild(time);
-      elementKeys.ansHtml.forEach((element) => {
-        questionContainer.removeChild(element);
       });
-      if(this.questionShow==0||this.questionShow<10){
-        this.questionShow++;
-      }
-      if(this.questionShow >= 1){
-        clockCounter++
-      }
-      this.showTrivia();
-    } else {
-      let elementKeys = this.round[ind].htmlElements;
-      questionContainer.removeChild(elementKeys.hElement);
-      questionContainer.removeChild(time);
+    } else if (chosenAnswer === undefined) {
       elementKeys.ansHtml.forEach((element) => {
-        questionContainer.removeChild(element);
-      }) 
-      if(this.marker >= 1000){
-          console.log("WIN");
-          console.log("Marker", this.marker);
-          console.log("round", this.round);
-        }else{
-          console.log("LOSE");
-          console.log("Marker", this.marker);
-          console.log("round", this.round);
-      }
+        if (element.value == correctAnswer) {
+          element.className = "ansCorrect";
+        } else {
+          element.className = "ansButInCorrect";
+        }
+      });
+    } else {
+      elementKeys.ansHtml.forEach((element) => {
+        if (element.value == correctAnswer) {
+          element.className = "ansCorrect";
+        } else {
+          element.className = "ansButInCorrect";
+        }
+      });
     }
+    questionContainer.removeChild(time);
+    const changeQuestion = () => {
+      if (ind < this.round.length - 1) {
+        if (correctAnswer == chosenAnswer) {
+          this.marker += points;
+        } else if (chosenAnswer === undefined) {
+          this.round[ind].chooseAnswer = "End Time";
+        }
+        questionContainer.removeChild(elementKeys.hElement);
+        elementKeys.ansHtml.forEach((element) => {
+          questionContainer.removeChild(element);
+        });
+        if (this.questionShow == 0 || this.questionShow < 10) {
+          this.questionShow++;
+        }
+        if (this.questionShow >= 1) {
+          clockCounter++;
+        }
+        this.showTrivia();
+      } else {
+        questionContainer.removeChild(elementKeys.hElement);
+        elementKeys.ansHtml.forEach((element) => {
+          questionContainer.removeChild(element);
+        });
+        window.body.removeChild(questionContainer);
+        finish(this);
+        clockCounter = 1;
+      }
+    };
+    setTimeout(changeQuestion, 2000);
   }
 }
 export default Trivia;
