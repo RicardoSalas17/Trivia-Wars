@@ -189,7 +189,7 @@ const tieFight = new TieFighter()
       this.width = 3
       this.height = 3
       this.img = new Image()
-      this.img.src = 'https://lh3.googleusercontent.com/proxy/wF0_Ij0YIGsYgX-EHJs0uLwyh2rlU8G_LlGu4B5U-hD4RecshpkIc29oDPJAvzIh1tnc56719aNedoTD1V1QqSnfoLJs3OFD'
+      this.img.src = 'http://pixelartmaker.com/art/cffedf3d8504aa9.png'
     }
     draw() {
       this.y++
