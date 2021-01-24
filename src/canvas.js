@@ -109,11 +109,11 @@ export default Board;
 
 
 
-class  {
+class TieFighter {
     constructor() {
       this.width = 50
       this.height = 40
-      this.y = canvas.height - this.height
+      this.y = canvas.height //- this.height
       this.x = 40
       this.img = new Image()
       this.img.src =
@@ -152,13 +152,13 @@ class  {
     //   this.vy = -this.jumpStrenght * 2
     // }
   }
-const flash = new XWing()
-  function flashAnimation() {
+const tieFight = new TieFighter()
+  function tieAnimation() {
     if (frames % 5 === 0) {
-      if (flash.animate === 3) {
-        flash.animate = 0
+      if (tieFight.animate === 3) {
+        tieFight.animate = 0
       } else {
-        flash.animate++
+        tieFight.animate++
       }
     }
   }
