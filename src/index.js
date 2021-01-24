@@ -72,15 +72,15 @@ class Board {
     }
   }
   
-  class Flash {
+  class XWing {
     constructor() {
-      this.width = 60
-      this.height = 60
+      this.width = 50
+      this.height = 40
       this.y = canvas.height - this.height
       this.x = 40
       this.img = new Image()
       this.img.src =
-        'https://previews.dropbox.com/p/thumb/ABA-bTvedMTx-_hTjbd2cEbskApIq5eQpZlMwYs1Qom-Lkf7w2snF7RPhb2xmAG1QYoV0eGFNFKJ6VhCSEPwIoYOCBx-XLFBOh8h5KNuUKSPxAbvIeFB3QaY5qCk6wWDC_CXIPNIKkGxbR1ie2vvJiw270nq4l0gWOmH9BswLo6BmQmMl0MHdd7bo9Bv2aQPxEuwePgIpLrLyqdMcqOnGKwA4mD9T0GJCUo5V7fiiM8yZw6I3kFfP-Gxj7vhj6vSBkUEOdzWB2c0gl1JLkO-UPadBsFc6bM3KTt00aSAXJ1bT7c_FyUYzXgSA7wZ8W6_KNiJi1NQJb-yzP1xe8-KmRUjREjplUCPdPyhdsECGXs3tw/p.png?fv_content=true&size_mode=5'
+        'https://previews.dropbox.com/p/thumb/ABAcg5Xl-d-RRZAdpMvTtjwcnlizHF1i2HCbYMUp2t4WAOx1Wx-KdqasI-YbUiZjL0E-baPppS0_nl9gBv4a3CdTkmJhPd9DcrC0e6Xm8enZWeDEPJef9qp6IA1vckW6xenoc5Qu6h1X8JLYXIWSELS0YQ4zIx5cTiAkfaFEmgmu3r4eC7lHNQbmLyXWWx23JQwPdlcHgiw7chlgSxo9efK1lZO9yRwPU6GVwPUn0DpSkrCuQShuE2ENMTx3AR0X_VuC4sPB08Eqvdf51tr80dNehFe8ob8HEL0VIzRCWUZ3vawQ4R-uPGjYV4L2VQBizUTWJNkOxb15Iu4ie24Q9Q3N9Qets7I_PUm6Kw-He-jpsw/p.png?fv_content=true&size_mode=5'
       this.img.onload = () => {
         this.draw()
       }
@@ -115,7 +115,7 @@ class Board {
     //   this.vy = -this.jumpStrenght * 2
     // }
   }
-const flash = new Flash()
+const flash = new XWing()
   function flashAnimation() {
     if (frames % 5 === 0) {
       if (flash.animate === 3) {
@@ -126,7 +126,59 @@ const flash = new Flash()
     }
   }
 
-
+  class TieFighter {
+    constructor() {
+      this.width = 55
+      this.height = 40
+      this.y =  this.height
+      this.x = 40
+      this.img = new Image()
+      this.img.src =
+      'https://previews.dropbox.com/p/thumb/ABAzThjXcVARB-N9_T9L2uxUQ2naJgvjaIwrvR8T7LYb-Pez0v-18COB5BdOpyGxSlhp3OolCbUIPH-iER4OjBkM00MSQAYnhvzFtGS5vkKiMvtQadcffU11Fyn6RCV-4JNio73uzT50O_wniNHNTvih4zOC6eT6vFxY-vgUN1P_ie202vCW4ZAun6gxlO-kdg0KWAwJ60iDRj2pQ36l5wPJ3LPzfgHznMcN6eo9XuZKLTGSj20fiZcxDTiuEd_uEYCRQzApATZ2yrUgxrQ4ud270AvNbc95U-HeF5iiRC19SJuFOdJ9Ypexf5yKlxrjo38ghwlGNdQfJqRFwled7fqjN0jFcqZf9LbPWDtjF95Scg/p.png?fv_content=true&size_mode=5'
+      this.img.onload = () => {
+        this.draw()
+      }
+    }
+    draw() {
+      ctx.drawImage(
+        this.img,
+        this.x,
+        this.y,
+        this.width,
+        this.height
+      )
+    }
+    // isTouching(obstacle) {
+    //   // algo está tratando de ocupar el mismo espacio en canvas que flash
+    //   return (
+    //     this.x < obstacle.x + obstacle.width &&
+    //     this.x + this.width > obstacle.x &&
+    //     this.y < obstacle.y + obstacle.height &&
+    //     this.y + this.height > obstacle.y
+    //   )
+    // }
+    // moveLeft() {
+    //   this.vx -= 3
+    //   this.position = 1
+    // }
+    // moveRight() {
+    //   this.vx += 3
+    //   this.position = 2
+    // }
+    // jump() {
+    //   this.vy = -this.jumpStrenght * 2
+    // }
+  }
+const tieFight = new TieFighter()
+  function tieAnimation() {
+    if (frames % 5 === 0) {
+      if (tieFight.animate === 3) {
+        tieFight.animate = 0
+      } else {
+        tieFight.animate++
+      }
+    }
+  }
 
 
   
@@ -171,6 +223,8 @@ const flash = new Flash()
     board.draw()
     flashAnimation()
     flash.draw()
+    tieFight.draw()
+    tieAnimation()
     // flash.x += flash.vx
     // flash.y += flash.vy
     // flash.y += gravity

@@ -106,3 +106,59 @@
 //     }
 //   }
 export default Board;
+
+
+
+class  {
+    constructor() {
+      this.width = 50
+      this.height = 40
+      this.y = canvas.height - this.height
+      this.x = 40
+      this.img = new Image()
+      this.img.src =
+      'https://previews.dropbox.com/p/thumb/ABAzThjXcVARB-N9_T9L2uxUQ2naJgvjaIwrvR8T7LYb-Pez0v-18COB5BdOpyGxSlhp3OolCbUIPH-iER4OjBkM00MSQAYnhvzFtGS5vkKiMvtQadcffU11Fyn6RCV-4JNio73uzT50O_wniNHNTvih4zOC6eT6vFxY-vgUN1P_ie202vCW4ZAun6gxlO-kdg0KWAwJ60iDRj2pQ36l5wPJ3LPzfgHznMcN6eo9XuZKLTGSj20fiZcxDTiuEd_uEYCRQzApATZ2yrUgxrQ4ud270AvNbc95U-HeF5iiRC19SJuFOdJ9Ypexf5yKlxrjo38ghwlGNdQfJqRFwled7fqjN0jFcqZf9LbPWDtjF95Scg/p.png?fv_content=true&size_mode=5'
+      this.img.onload = () => {
+        this.draw()
+      }
+    }
+    draw() {
+      ctx.drawImage(
+        this.img,
+        this.x,
+        this.y,
+        this.width,
+        this.height
+      )
+    }
+    // isTouching(obstacle) {
+    //   // algo está tratando de ocupar el mismo espacio en canvas que flash
+    //   return (
+    //     this.x < obstacle.x + obstacle.width &&
+    //     this.x + this.width > obstacle.x &&
+    //     this.y < obstacle.y + obstacle.height &&
+    //     this.y + this.height > obstacle.y
+    //   )
+    // }
+    // moveLeft() {
+    //   this.vx -= 3
+    //   this.position = 1
+    // }
+    // moveRight() {
+    //   this.vx += 3
+    //   this.position = 2
+    // }
+    // jump() {
+    //   this.vy = -this.jumpStrenght * 2
+    // }
+  }
+const flash = new XWing()
+  function flashAnimation() {
+    if (frames % 5 === 0) {
+      if (flash.animate === 3) {
+        flash.animate = 0
+      } else {
+        flash.animate++
+      }
+    }
+  }
