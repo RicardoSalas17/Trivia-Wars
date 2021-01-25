@@ -348,13 +348,13 @@ const deathStart=new DeathStart()
         setTimeout(restoreCanvas,6100)
       }
 
-    // indx.finish(data)
+
   }
  function update() {
     frames++
     if(window.canvas.className==="showCanvas"){
       clearCanvas()
-    }
+
     board.draw()
     flashAnimation()
     xWing.draw()
@@ -385,13 +385,8 @@ const deathStart=new DeathStart()
        tieFight.lastMove()
        xWing.lastMove()
      }
-    //  if(restoreCanvasListener===true){
-    //    deathStart.moveUp()
-    //    tieFight.moveLeft()
-    //    xWing.moveLeft()
-    //  }
      drawShot()
-
+    }
   }
   interval = setInterval(update, 1000 / 60)
 

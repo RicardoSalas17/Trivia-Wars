@@ -9,6 +9,9 @@ let body = document.getElementById("body");
 body.className = "init";
 let buttonStart = document.createElement("button");
 buttonStart.className = "initBut";
+
+let titleInit = document.createElement("button");
+titleInit.className = "initBut";
 let starWarsLetters = document.createElement("section");
 starWarsLetters.className="star-wars"
 let crawl= document.createElement("div")
@@ -73,10 +76,10 @@ duelSong.src="../songs/8d82b5_Star_Wars_Duel_of_the_Fates_Theme_Song.mp3"
 let songStart= new Audio();
 songStart.src="../songs/8d82b5_Star_Wars_Main_Theme_Song.mp3"
 
-window.addEventListener("DOMContentLoaded", event => {
-  songStart.volume = 0.2;
-  songStart.play();
-});
+// window.addEventListener("DOMContentLoaded", event => {
+//   songStart.volume = 0.2;
+//   songStart.play();
+// });
 
 let shotAudio= new Audio();
 shotAudio.src="../songs/TIE fighter fire 2.mp3"
@@ -220,20 +223,28 @@ const menuOut = () => {
   body.removeChild(p);
   body.className = "";
 };
-//play song
-// const  onload = () => {
-//   songStart.play()
-// }
+
+
 //Init Game
 const init = () => {
+  body.removeChild(titleInit)
   buttonStart.innerHTML = "START";
+  buttonStart.addEventListener("click",showMenu)
   body.appendChild(buttonStart);
   body.appendChild(fade);
   body.appendChild(starWarsLetters);
-  buttonStart.addEventListener("click", showMenu);
-  // onload()
+  songStart.play()
 };
-init();
+
+
+//Title
+const title =()=>{
+  titleInit.innerHTML = "START";
+  titleInit.addEventListener("click", init)
+  body.appendChild(titleInit);
+  
+}
+title()
 
 //Finish Game
 const finish = (finalDataTrivia) => {
