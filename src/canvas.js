@@ -351,19 +351,16 @@ const deathStart=new DeathStart()
     // indx.finish(data)
   }
  function update() {
-   if(window.canvas.className==="showCanvas"){
-      frames++
+    frames++
+    if(window.canvas.className==="showCanvas"){
       clearCanvas()
-      board.draw()
-      flashAnimation()
-      xWing.draw()
-      tieFight.draw()
-      deathStart.draw()
-      tieAnimation()
-      generateStars()
-      drawStars()
-      drawShot()
-    
+    }
+    board.draw()
+    flashAnimation()
+    xWing.draw()
+    tieFight.draw()
+    deathStart.draw()
+    tieAnimation()
     if(listenerxWing===true){
       xWing.shot()
     }
@@ -388,13 +385,12 @@ const deathStart=new DeathStart()
        tieFight.lastMove()
        xWing.lastMove()
      }
-     //  if(restoreCanvasListener===true){
-       //    deathStart.moveUp()
-       //    tieFight.moveLeft()
-       //    xWing.moveLeft()
-       //  }
-       drawShot()
-      }
+    //  if(restoreCanvasListener===true){
+    //    deathStart.moveUp()
+    //    tieFight.moveLeft()
+    //    xWing.moveLeft()
+    //  }
+     drawShot()
 
   }
   interval = setInterval(update, 1000 / 60)

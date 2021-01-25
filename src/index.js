@@ -215,7 +215,10 @@ const menuOut = () => {
   body.removeChild(p);
   body.className = "";
 };
-
+//play song
+const  onload = () => {
+  songStart.play()
+}
 //Init Game
 const init = () => {
   buttonStart.innerHTML = "START";
@@ -223,7 +226,7 @@ const init = () => {
   body.appendChild(fade);
   body.appendChild(starWarsLetters);
   buttonStart.addEventListener("click", showMenu);
-  songStart.play();
+  onload()
 };
 init();
 
