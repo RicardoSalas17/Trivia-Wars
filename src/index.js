@@ -1,7 +1,7 @@
 import "./styles/main.scss";
 import axios from "axios";
 import Trivia from "./trivia";
-import * as Canvas from "./canvas"
+import * as Canvas from "./canvas";
 
 //Init
 let counterGeneral = 1;
@@ -13,19 +13,19 @@ buttonStart.className = "initBut";
 let titleInit = document.createElement("button");
 titleInit.className = "initBut";
 let starWarsLetters = document.createElement("section");
-starWarsLetters.className="star-wars"
-let crawl= document.createElement("div")
-crawl.className="crawl"
-starWarsLetters.appendChild(crawl)
-crawl.innerHTML=`<div class="title">
+starWarsLetters.className = "star-wars";
+let crawl = document.createElement("div");
+crawl.className = "crawl";
+starWarsLetters.appendChild(crawl);
+crawl.innerHTML = `<div class="title">
 <h1>Trivia-Wars</h1>
 <p>A DEV-F project</p>
 </div><p>It is a period of civil war. Rebel spaceships, striking from a hidden base, have won their first victory against the evil Galactic Empire.</p>      
 <p>During the battle, Rebel spies managed to steal secret plans to the Empire’s ultimate weapon, the DEATH STAR, an armored space station with enough power to destroy an entire planet.</p>
-<p>Pursued by the Empire’s sinister agents, the Rebels need to solve a Trivia and then they can save people and restore freedom to the galaxy…</p>`
-starWarsLetters.className="star-wars"
-let fade= document.createElement("div");
-fade.className="fade"
+<p>Pursued by the Empire’s sinister agents, the Rebels need to solve a Trivia and then they can save people and restore freedom to the galaxy…</p>`;
+starWarsLetters.className = "star-wars";
+let fade = document.createElement("div");
+fade.className = "fade";
 //Select difficulty
 let difficulty = document.createElement("select");
 let any = document.createElement("option");
@@ -62,36 +62,29 @@ type.appendChild(trueFalse);
 
 //Description
 let p = document.createElement("p");
-p.className="description"
-p.innerHTML="Solve the trivia and get a marker of 1000 points or more."
-
+p.className = "description";
+p.innerHTML = "Solve the trivia and get a marker of 1000 points or more.";
 
 //Sound efects
-let rTwo = new Audio()
-rTwo.src = "../songs/Happy ThreeChirp.mp3"
+let rTwo = new Audio();
+rTwo.src = "../songs/Happy ThreeChirp.mp3";
 
-let duelSong= new Audio();
-duelSong.src="../songs/8d82b5_Star_Wars_Duel_of_the_Fates_Theme_Song.mp3"
+let duelSong = new Audio();
+duelSong.src = "../songs/8d82b5_Star_Wars_Duel_of_the_Fates_Theme_Song.mp3";
 
-let songStart= new Audio();
-songStart.src="../songs/8d82b5_Star_Wars_Main_Theme_Song.mp3"
+let songStart = new Audio();
+songStart.src = "../songs/8d82b5_Star_Wars_Main_Theme_Song.mp3";
 
-// window.addEventListener("DOMContentLoaded", event => {
-//   songStart.volume = 0.2;
-//   songStart.play();
-// });
-
-let shotAudio= new Audio();
-shotAudio.src="../songs/TIE fighter fire 2.mp3"
+let shotAudio = new Audio();
+shotAudio.src = "../songs/TIE fighter fire 2.mp3";
 
 let winAudio = new Audio();
-winAudio.src="../songs/8d82b5_Star_Wars_Cantina_Theme_Song.mp3"
+winAudio.src = "../songs/8d82b5_Star_Wars_Cantina_Theme_Song.mp3";
 
 let lostAudio = new Audio();
-lostAudio.src="../songs/8d82b5_Star_Wars_The_Imperial_March_Theme_Song.mp3"
+lostAudio.src = "../songs/8d82b5_Star_Wars_The_Imperial_March_Theme_Song.mp3";
 //canvas
-const canvas =document.getElementById("canvas");
-
+const canvas = document.getElementById("canvas");
 
 //Category
 let category = document.createElement("select");
@@ -142,9 +135,9 @@ const generateTrivia = () => {
   let typeSelect = type.value.toLowerCase();
   let difficultySelect = difficulty.value.toLowerCase();
   let URL_GEN;
-  rTwo.play()
+  rTwo.play();
   songStart.pause();
-  songStart.currentTime = 0
+  songStart.currentTime = 0;
   const urlGenerator = () => {
     if (
       typeSelect == "any" &&
@@ -173,11 +166,16 @@ const generateTrivia = () => {
     .get(URL_GEN)
     .then((response) => {
       let dataGet = response.data.results;
-      const trivia = new Trivia(dataGet, difficultySelect, Canvas.xWing, Canvas.tieFight);
+      const trivia = new Trivia(
+        dataGet,
+        difficultySelect,
+        Canvas.xWing,
+        Canvas.tieFight
+      );
       duelSong.play();
       trivia.questionsGen();
       menuOut();
-      canvas.className ="showCanvas"
+      canvas.className = "showCanvas";
       body.appendChild(canvas);
       Canvas.update();
     })
@@ -189,15 +187,13 @@ const generateTrivia = () => {
 
 //Show Menu
 const showMenu = () => {
-  rTwo.play()
+  rTwo.play();
   body.className = "init";
   if (counterGeneral == 1) {
     body.removeChild(buttonStart);
-    body.removeChild(starWarsLetters)
+    body.removeChild(starWarsLetters);
   }
   if (counterGeneral >= 2) {
-    // duelSong.pause();
-    // duelSong.currentTime = 0;
     winAudio.pause();
     lostAudio.pause();
     winAudio.currentTime = 0;
@@ -224,27 +220,24 @@ const menuOut = () => {
   body.className = "";
 };
 
-
 //Init Game
 const init = () => {
-  body.removeChild(titleInit)
+  body.removeChild(titleInit);
   buttonStart.innerHTML = "START";
-  buttonStart.addEventListener("click",showMenu)
+  buttonStart.addEventListener("click", showMenu);
   body.appendChild(buttonStart);
   body.appendChild(fade);
   body.appendChild(starWarsLetters);
-  songStart.play()
+  songStart.play();
 };
 
-
 //Title
-const title =()=>{
+const title = () => {
   titleInit.innerHTML = "START";
-  titleInit.addEventListener("click", init)
+  titleInit.addEventListener("click", init);
   body.appendChild(titleInit);
-  
-}
-title()
+};
+title();
 
 //Finish Game
 const finish = (finalDataTrivia) => {
@@ -260,9 +253,9 @@ const finish = (finalDataTrivia) => {
   if (marker >= 1000) {
     result.innerHTML = "YOU WIN!";
     total.innerHTML = `${marker}`;
-    canvas.className="dontShowCanvas"
-    winAudio.play()
-    body.className  ="init";
+    canvas.className = "dontShowCanvas";
+    winAudio.play();
+    body.className = "init";
     body.appendChild(result);
     body.appendChild(total);
   }
@@ -270,23 +263,12 @@ const finish = (finalDataTrivia) => {
   else {
     result.innerHTML = "YOU LOSE!";
     total.innerHTML = `${marker}`;
-    canvas.className="dontShowCanvas";
-    lostAudio.play()
-    body.className="init";
+    canvas.className = "dontShowCanvas";
+    lostAudio.play();
+    body.className = "init";
     body.appendChild(result);
     body.appendChild(total);
   }
 };
 
-
-export  {canvas as canvas, finish as finish, shotAudio as shotAudio }
-
-
-
-
-
-
-
-
-
-
+export { canvas as canvas, finish as finish, shotAudio as shotAudio };
