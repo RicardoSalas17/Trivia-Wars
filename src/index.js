@@ -47,9 +47,6 @@ type.appendChild(trueFalse);
 const canvas =document.getElementById("canvas");
 
 
-
-
-
 //Category
 let category = document.createElement("select");
 const categoryList = () => {
@@ -137,9 +134,7 @@ const generateTrivia = () => {
     });
     canvas.className ="showCanvas"
     body.appendChild(canvas);
-    // const board = new Board()
     Canvas.update();
-    // drawObstacles();
 };
 
 //Show Menu
@@ -176,6 +171,7 @@ const init = () => {
 };
 init();
 
+//Finish Game
 const finish = (finalDataTrivia) => {
   counterGeneral++;
   let marker = finalDataTrivia.marker;
@@ -187,7 +183,8 @@ const finish = (finalDataTrivia) => {
   if (marker >= 1000) {
     result.value = "YOU WIN!";
     total.value = `${marker}`;
-    body.removeChild(canvas)
+    // body.removeChild(canvas)
+    canvas.className="dontShowCanvas"
     body.className="init";
     body.appendChild(result);
     body.appendChild(total);
@@ -196,7 +193,8 @@ const finish = (finalDataTrivia) => {
   else {
     result.innerHTML = "YOU LOSE!";
     total.innerHTML = `${marker}`;
-    body.removeChild(canvas)
+    // body.removeChild(canvas)
+    canvas.className="dontShowCanvas";
     body.className="init";
     body.appendChild(result);
     body.appendChild(total);
@@ -204,13 +202,6 @@ const finish = (finalDataTrivia) => {
 };
 
 
-
-
-
-
-
-
-// export  {finish as finish, shooter as shot, shooterOf as shotOf,stopNave as move }
 export  {canvas as canvas, finish as finish  }
 
 

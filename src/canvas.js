@@ -1,10 +1,11 @@
-import * as Indx from "./index"
+import * as indx from "./index";
 const ctx=window.canvas.getContext('2d')
 let interval
 let frames = 0
-let gravity = 8.9
 const stars = []
 const shots = []
+
+
 class Board {
     constructor() {
       this.x = 0
@@ -59,6 +60,21 @@ class Board {
         this.x += 1
       }
     }
+    lastMove(){
+      // if(moveStatus=="left"){
+        if(this.x <125){
+          this.x += 1
+        // }
+      }
+      // else if(moveStatus=="right"){
+        else if(this.x >125){
+          this.x -= 1
+        }
+        else{
+
+        }
+      // }
+    }
   }
 const xWing = new XWing()
   function flashAnimation() {
@@ -106,6 +122,11 @@ const xWing = new XWing()
       if(this.x >=25){
         this.x -= 1
       }
+    }
+    lastMove(){
+        if(this.x <=550){
+          this.x += 1
+        }
     }
   }
 const tieFight = new TieFighter()
@@ -198,39 +219,87 @@ const tieFight = new TieFighter()
   }
 
 
-// const shot= new Shot()
+
+  class DeathStart {
+    constructor() {
+      this.width = 60
+      this.height = 70
+      this.y = -90
+      this.x = 120
+      this.img = new Image()
+      this.img.src =
+        'https://www.pngkey.com/png/full/14-142561_death-star-pixel-art.png'
+      this.img.onload = () => {
+        this.draw()
+      }
+    }
+    draw() {
+      ctx.drawImage(
+        this.img,
+        this.x,
+        this.y,
+        this.width,
+        this.height
+      )
+    }
+    shot(){
+      generateShot(this.x, this.y,"DeathStart")
+      drawShot()
+      }
+
+    moveDown(){
+      if(this.y < 5){
+        this.y += 1;
+      }
+    }
+    moveUp(){
+      if(this.y < -90){
+        this.y -= 1;
+      }
+    }
+  }
+const deathStart=new DeathStart()
+
+
+
+
   const board = new Board()
   let listenerxWing=false
   let listenertieFight=false
   let moveRightListener=false
   let moveLeftListener=false
+  let listenerD =false
   let moveStatus = "left"
+  let restoreCanvasListener= false
 
 
   const shooter=(whoShot)=>{
     if(whoShot ==="xwing"){
       listenerxWing = true
-    }else if(whoShot=="tieFight"){
+    }else if(whoShot==="tieFight"){
       listenertieFight = true
+        }else if(whoShot==="DeathStart"){
+          listenerD= true
         }
   }
   const shooterOf=()=>{
       listenerxWing = false
       listenertieFight = false
       setTimeout(moveNave(),5000)
-
   }
+  const endShooterOf=()=>{
+    listenerxWing = false
+    listenertieFight = false
+    listenerD=false
+}
 
   const moveNave=()=>{
     if(moveStatus==="left"){
       moveRightListener = true
-      // moveStatus="right"
     }
     else if(moveStatus==="right"){
       moveLeftListener = true
-      // moveStatus="left"
     }
-    // setTimeout(stopNave(),5000)
   }
   const stopNave=()=>{
     moveRightListener = false
@@ -241,19 +310,65 @@ const tieFight = new TieFighter()
       moveStatus="left"
     }
   }
+  let lastMoveListener = false
+  const lastMove=(data)=>{
+    lastMoveListener=true
+    let marker = data.marker;
+    // console.log('marker: ', marker);
+    const changeImageLose=()=>xWing.img.src="https://i.pinimg.com/originals/4c/a0/92/4ca092beb9b20f34fdd3f22e6686462f.png";
+    const changeImageWin=()=>deathStart.img.src="https://i.pinimg.com/originals/4c/a0/92/4ca092beb9b20f34fdd3f22e6686462f.png";
+    const finishGame=()=>indx.finish(data)
+    const restoreStatusmove =()=>restoreCanvasListener=false
+    const restoreCanvas=()=>{
+      // restoreCanvasListener=true
+      lastMoveListener=false
+      moveStatus = "left"
+      xWing.img.src='https://previews.dropbox.com/p/thumb/ABAcg5Xl-d-RRZAdpMvTtjwcnlizHF1i2HCbYMUp2t4WAOx1Wx-KdqasI-YbUiZjL0E-baPppS0_nl9gBv4a3CdTkmJhPd9DcrC0e6Xm8enZWeDEPJef9qp6IA1vckW6xenoc5Qu6h1X8JLYXIWSELS0YQ4zIx5cTiAkfaFEmgmu3r4eC7lHNQbmLyXWWx23JQwPdlcHgiw7chlgSxo9efK1lZO9yRwPU6GVwPUn0DpSkrCuQShuE2ENMTx3AR0X_VuC4sPB08Eqvdf51tr80dNehFe8ob8HEL0VIzRCWUZ3vawQ4R-uPGjYV4L2VQBizUTWJNkOxb15Iu4ie24Q9Q3N9Qets7I_PUm6Kw-He-jpsw/p.png?fv_content=true&size_mode=5';
+      xWing.x=40
+      tieFight.x=25
+      deathStart.img.src='https://www.pngkey.com/png/full/14-142561_death-star-pixel-art.png';
+      deathStart.y=-90
+      endShooterOf()
+      setTimeout(restoreStatusmove,2000)
+    }
+      if (marker >= 1000) {
+        shooter("xwing")
+        listenerxWing===true
+        setTimeout(changeImageWin,3000)
+        setTimeout(finishGame,6000)
+        setTimeout(restoreCanvas,6100)
+      }
+      //Lose
+      else {
+        shooter("DeathStart")
+        listenerD===true
+        setTimeout(changeImageLose,3000)
+        setTimeout(finishGame,6000)
+        setTimeout(restoreCanvas,6100)
+      }
+
+
+    // indx.finish(data)
+  }
  function update() {
     frames++
-    clearCanvas()
+    if(window.canvas.className==="showCanvas"){
+      clearCanvas()
+    }
     board.draw()
     flashAnimation()
     xWing.draw()
     tieFight.draw()
+    deathStart.draw()
     tieAnimation()
     if(listenerxWing===true){
       xWing.shot()
     }
     if(listenertieFight===true){
       tieFight.shot()
+    }
+    if(listenerD===true){
+      deathStart.shot()
     }
     generateStars()
     drawStars()
@@ -265,8 +380,20 @@ const tieFight = new TieFighter()
       xWing.moveLeft()
       tieFight.moveLeft()
      }
+     if(lastMoveListener===true){
+       deathStart.moveDown()
+       tieFight.lastMove()
+       xWing.lastMove()
+     }
+    //  if(restoreCanvasListener===true){
+    //    deathStart.moveUp()
+    //    tieFight.moveLeft()
+    //    xWing.moveLeft()
+    //  }
+     drawShot()
+
   }
   interval = setInterval(update, 1000 / 60)
 
 
-  export  {update as update, xWing as xWing, tieFight as tieFight,shooter as shot, shooterOf as shotOf, stopNave as move }
+  export  {update as update, xWing as xWing, tieFight as tieFight,shooter as shot, shooterOf as shotOf, stopNave as move, lastMove as lastMove }
