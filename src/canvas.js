@@ -348,7 +348,6 @@ const deathStart=new DeathStart()
         setTimeout(restoreCanvas,6100)
       }
 
-
     // indx.finish(data)
   }
  function update() {
