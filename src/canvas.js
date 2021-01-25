@@ -351,8 +351,8 @@ const deathStart=new DeathStart()
     // indx.finish(data)
   }
  function update() {
-    frames++
-    if(window.canvas.className==="showCanvas"){
+   if(window.canvas.className==="showCanvas"){
+      frames++
       clearCanvas()
       board.draw()
       flashAnimation()
