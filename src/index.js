@@ -1,7 +1,7 @@
 import "./styles/main.scss";
 import axios from "axios";
 import Trivia from "./trivia";
-// import Board from "./canvas"
+import * as Canvas from "./canvas"
 
 //Init
 let counterGeneral = 1;
@@ -44,198 +44,7 @@ trueFalse.innerHTML = "True/False";
 type.appendChild(trueFalse);
 
 //canvas
-const canvas =document.createElement("canvas");
-// canvas.with="100%"
-// canvas.height="100%"
-
-
-
-const ctx = canvas.getContext('2d')
-let interval
-let frames = 0
-let gravity = 8.9
-const stars = []
-class Board {
-    constructor() {
-      this.x = 0
-      this.y = 0
-      this.width = canvas.width
-      this.height = canvas.height
-      this.img = new Image()
-      this.img.src ='https://upload.wikimedia.org/wikipedia/commons/7/71/Black.png'
-      this.img.onload = () => {
-        this.draw()
-      }
-    }
-    draw() {
-      ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
-    }
-  }
-  
-  class XWing {
-    constructor() {
-      this.width = 50
-      this.height = 40
-      this.y = canvas.height - this.height
-      this.x = 40
-      this.img = new Image()
-      this.img.src =
-        'https://previews.dropbox.com/p/thumb/ABAcg5Xl-d-RRZAdpMvTtjwcnlizHF1i2HCbYMUp2t4WAOx1Wx-KdqasI-YbUiZjL0E-baPppS0_nl9gBv4a3CdTkmJhPd9DcrC0e6Xm8enZWeDEPJef9qp6IA1vckW6xenoc5Qu6h1X8JLYXIWSELS0YQ4zIx5cTiAkfaFEmgmu3r4eC7lHNQbmLyXWWx23JQwPdlcHgiw7chlgSxo9efK1lZO9yRwPU6GVwPUn0DpSkrCuQShuE2ENMTx3AR0X_VuC4sPB08Eqvdf51tr80dNehFe8ob8HEL0VIzRCWUZ3vawQ4R-uPGjYV4L2VQBizUTWJNkOxb15Iu4ie24Q9Q3N9Qets7I_PUm6Kw-He-jpsw/p.png?fv_content=true&size_mode=5'
-      this.img.onload = () => {
-        this.draw()
-      }
-    }
-    draw() {
-      ctx.drawImage(
-        this.img,
-        this.x,
-        this.y,
-        this.width,
-        this.height
-      )
-    }
-    // isTouching(obstacle) {
-    //   // algo está tratando de ocupar el mismo espacio en canvas que flash
-    //   return (
-    //     this.x < obstacle.x + obstacle.width &&
-    //     this.x + this.width > obstacle.x &&
-    //     this.y < obstacle.y + obstacle.height &&
-    //     this.y + this.height > obstacle.y
-    //   )
-    // }
-    // moveLeft() {
-    //   this.vx -= 3
-    //   this.position = 1
-    // }
-    // moveRight() {
-    //   this.vx += 3
-    //   this.position = 2
-    // }
-    // jump() {
-    //   this.vy = -this.jumpStrenght * 2
-    // }
-  }
-const flash = new XWing()
-  function flashAnimation() {
-    if (frames % 5 === 0) {
-      if (flash.animate === 3) {
-        flash.animate = 0
-      } else {
-        flash.animate++
-      }
-    }
-  }
-
-  class TieFighter {
-    constructor() {
-      this.width = 55
-      this.height = 40
-      this.y =  this.height
-      this.x = 40
-      this.img = new Image()
-      this.img.src =
-      'https://previews.dropbox.com/p/thumb/ABAzThjXcVARB-N9_T9L2uxUQ2naJgvjaIwrvR8T7LYb-Pez0v-18COB5BdOpyGxSlhp3OolCbUIPH-iER4OjBkM00MSQAYnhvzFtGS5vkKiMvtQadcffU11Fyn6RCV-4JNio73uzT50O_wniNHNTvih4zOC6eT6vFxY-vgUN1P_ie202vCW4ZAun6gxlO-kdg0KWAwJ60iDRj2pQ36l5wPJ3LPzfgHznMcN6eo9XuZKLTGSj20fiZcxDTiuEd_uEYCRQzApATZ2yrUgxrQ4ud270AvNbc95U-HeF5iiRC19SJuFOdJ9Ypexf5yKlxrjo38ghwlGNdQfJqRFwled7fqjN0jFcqZf9LbPWDtjF95Scg/p.png?fv_content=true&size_mode=5'
-      this.img.onload = () => {
-        this.draw()
-      }
-    }
-    draw() {
-      ctx.drawImage(
-        this.img,
-        this.x,
-        this.y,
-        this.width,
-        this.height
-      )
-    }
-    // isTouching(obstacle) {
-    //   // algo está tratando de ocupar el mismo espacio en canvas que flash
-    //   return (
-    //     this.x < obstacle.x + obstacle.width &&
-    //     this.x + this.width > obstacle.x &&
-    //     this.y < obstacle.y + obstacle.height &&
-    //     this.y + this.height > obstacle.y
-    //   )
-    // }
-    // moveLeft() {
-    //   this.vx -= 3
-    //   this.position = 1
-    // }
-    // moveRight() {
-    //   this.vx += 3
-    //   this.position = 2
-    // }
-    // jump() {
-    //   this.vy = -this.jumpStrenght * 2
-    // }
-  }
-const tieFight = new TieFighter()
-  function tieAnimation() {
-    if (frames % 5 === 0) {
-      if (tieFight.animate === 3) {
-        tieFight.animate = 0
-      } else {
-        tieFight.animate++
-      }
-    }
-  }
-
-
-  
-  class Star {
-    constructor(y) {
-      this.x = y
-      this.y = -canvas.height 
-      this.width = 3
-      this.height = 3
-      this.img = new Image()
-      this.img.src = 'http://pixelartmaker.com/art/cffedf3d8504aa9.png'
-    }
-    draw() {
-      this.y++
-      ctx.drawImage(
-        this.img,
-         this.x,
-          this.y, 
-          this.width,
-           this.height)
-    }
-  }
-
-  function generateStars() {
-    if (frames % 30 === 0) {
-      const randomPosition = Math.floor(Math.random() * canvas.width)
-      const star = new Star(randomPosition)
-      stars.push(star)
-    }
-  }
-  function drawStars() {
-    stars.forEach(start => start.draw())
-  }
-  function clearCanvas() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-  }
-
-  const board = new Board()
-  function update() {
-    frames++
-    clearCanvas()
-    board.draw()
-    flashAnimation()
-    flash.draw()
-    tieFight.draw()
-    tieAnimation()
-    // flash.x += flash.vx
-    // flash.y += flash.vy
-    // flash.y += gravity
-    // checkColitions()
-    generateStars()
-    drawStars()
-    // gameOver()
-  }
-  interval = setInterval(update, 1000 / 60)
-
-
+const canvas =document.getElementById("canvas");
 
 
 
@@ -318,7 +127,7 @@ const generateTrivia = () => {
     .get(URL_GEN)
     .then((response) => {
       let dataGet = response.data.results;
-      const trivia = new Trivia(dataGet, difficultySelect);
+      const trivia = new Trivia(dataGet, difficultySelect, Canvas.xWing, Canvas.tieFight);
       trivia.questionsGen();
       menuOut();
     })
@@ -328,8 +137,8 @@ const generateTrivia = () => {
     });
     canvas.className ="showCanvas"
     body.appendChild(canvas);
-    const board = new Board()
-    update();
+    // const board = new Board()
+    Canvas.update();
     // drawObstacles();
 };
 
@@ -371,7 +180,6 @@ const finish = (finalDataTrivia) => {
   counterGeneral++;
   let marker = finalDataTrivia.marker;
   buttonRestart.innerHTML = `Restart`;
-  // buttonRestart.addEventListener("click", console.log("Contador",counterGeneral))
   body.appendChild(buttonRestart);
   buttonRestart.addEventListener("click", showMenu);
 
@@ -379,6 +187,8 @@ const finish = (finalDataTrivia) => {
   if (marker >= 1000) {
     result.value = "YOU WIN!";
     total.value = `${marker}`;
+    body.removeChild(canvas)
+    body.className="init";
     body.appendChild(result);
     body.appendChild(total);
   }
@@ -386,6 +196,8 @@ const finish = (finalDataTrivia) => {
   else {
     result.innerHTML = "YOU LOSE!";
     total.innerHTML = `${marker}`;
+    body.removeChild(canvas)
+    body.className="init";
     body.appendChild(result);
     body.appendChild(total);
   }
@@ -394,9 +206,19 @@ const finish = (finalDataTrivia) => {
 
 
 
-// export default Trivia;
 
 
 
 
-export default finish;
+// export  {finish as finish, shooter as shot, shooterOf as shotOf,stopNave as move }
+export  {canvas as canvas, finish as finish  }
+
+
+
+
+
+
+
+
+
+

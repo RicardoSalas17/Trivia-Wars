@@ -1,4 +1,7 @@
-import finish from "./index";
+import * as indx from "./index";
+import * as Canvas from "./canvas";
+
+
 const questionContainer = document.createElement("div");
 questionContainer.className = "qContainer";
 let time = document.createElement("h1");
@@ -131,6 +134,8 @@ class Trivia {
     let chosenAnswer = this.round[ind].chooseAnswer;
     let points = this.round[ind].points;
     if (correctAnswer == chosenAnswer) {
+      Canvas.shot("xwing")
+      // window.xWing.shot()
       elementKeys.ansHtml.forEach((element) => {
         if (element.value == chosenAnswer) {
           element.className = "ansButCorrect";
@@ -139,6 +144,8 @@ class Trivia {
         }
       });
     } else if (chosenAnswer === undefined) {
+      // window.tieFight.shot()
+      Canvas.shot("tieFight")
       elementKeys.ansHtml.forEach((element) => {
         if (element.value == correctAnswer) {
           element.className = "ansCorrect";
@@ -147,6 +154,8 @@ class Trivia {
         }
       });
     } else {
+      Canvas.shot("tieFight")
+      // window.tieFight.shot()
       elementKeys.ansHtml.forEach((element) => {
         if (element.value == correctAnswer) {
           element.className = "ansCorrect";
@@ -174,14 +183,18 @@ class Trivia {
           clockCounter++;
         }
         this.showTrivia();
+        Canvas.shotOf();
+        setTimeout(Canvas.move, 2900)
       } else {
         questionContainer.removeChild(elementKeys.hElement);
         elementKeys.ansHtml.forEach((element) => {
           questionContainer.removeChild(element);
         });
         window.body.removeChild(questionContainer);
-        finish(this);
+        indx.finish(this);
         clockCounter = 1;
+        Canvas.shotOf();
+        Canvas.move();
       }
     };
     setTimeout(changeQuestion, 2000);
