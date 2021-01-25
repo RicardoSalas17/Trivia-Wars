@@ -73,6 +73,11 @@ duelSong.src="../songs/8d82b5_Star_Wars_Duel_of_the_Fates_Theme_Song.mp3"
 let songStart= new Audio();
 songStart.src="../songs/8d82b5_Star_Wars_Main_Theme_Song.mp3"
 
+window.addEventListener("DOMContentLoaded", event => {
+  songStart.volume = 0.2;
+  songStart.play();
+});
+
 let shotAudio= new Audio();
 shotAudio.src="../songs/TIE fighter fire 2.mp3"
 
@@ -216,9 +221,9 @@ const menuOut = () => {
   body.className = "";
 };
 //play song
-const  onload = () => {
-  songStart.play()
-}
+// const  onload = () => {
+//   songStart.play()
+// }
 //Init Game
 const init = () => {
   buttonStart.innerHTML = "START";
@@ -226,7 +231,7 @@ const init = () => {
   body.appendChild(fade);
   body.appendChild(starWarsLetters);
   buttonStart.addEventListener("click", showMenu);
-  onload()
+  // onload()
 };
 init();
 
