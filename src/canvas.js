@@ -363,7 +363,7 @@ const deathStart=new DeathStart()
       generateStars()
       drawStars()
       drawShot()
-    }
+    
     if(listenerxWing===true){
       xWing.shot()
     }
@@ -388,12 +388,13 @@ const deathStart=new DeathStart()
        tieFight.lastMove()
        xWing.lastMove()
      }
-    //  if(restoreCanvasListener===true){
-    //    deathStart.moveUp()
-    //    tieFight.moveLeft()
-    //    xWing.moveLeft()
-    //  }
-     drawShot()
+     //  if(restoreCanvasListener===true){
+       //    deathStart.moveUp()
+       //    tieFight.moveLeft()
+       //    xWing.moveLeft()
+       //  }
+       drawShot()
+      }
 
   }
   interval = setInterval(update, 1000 / 60)
