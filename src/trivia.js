@@ -6,6 +6,8 @@ const questionContainer = document.createElement("div");
 questionContainer.className = "qContainer";
 let time = document.createElement("h1");
 let clockCounter = 1;
+let marker =document.createElement("h1")
+
 
 //Class Trivia
 class Trivia {
@@ -115,7 +117,8 @@ class Trivia {
       //Probe game
       "Correct Answer: ",
       this.round[this.questionShow].correctAnswer
-    );
+    );      
+
     questionContainer.appendChild(htmlKeyH);
     window.body.appendChild(questionContainer);
     function shuffle(array) {
@@ -139,7 +142,8 @@ class Trivia {
     htmlKeyB.forEach((ans) => {
       questionContainer.appendChild(ans);
     });
-
+    marker.innerHTML=`Marker:${this.marker}`;
+    questionContainer.appendChild(marker);
     questionContainer.appendChild(time);
     this.timeQuestion(this.round[this.questionShow]);
   }

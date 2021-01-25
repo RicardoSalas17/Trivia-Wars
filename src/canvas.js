@@ -208,6 +208,7 @@ const tieFight = new TieFighter()
   }
 
   function generateShot(x, y, who) {
+    indx.shotAudio.play()
     if (frames % 30 === 0) {
       const xPosition = x + 20
       const shot = new Shot(xPosition, y, who)
