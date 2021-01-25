@@ -354,13 +354,16 @@ const deathStart=new DeathStart()
     frames++
     if(window.canvas.className==="showCanvas"){
       clearCanvas()
+      board.draw()
+      flashAnimation()
+      xWing.draw()
+      tieFight.draw()
+      deathStart.draw()
+      tieAnimation()
+      generateStars()
+      drawStars()
+      drawShot()
     }
-    board.draw()
-    flashAnimation()
-    xWing.draw()
-    tieFight.draw()
-    deathStart.draw()
-    tieAnimation()
     if(listenerxWing===true){
       xWing.shot()
     }
