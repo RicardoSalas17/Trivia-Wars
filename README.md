@@ -25,6 +25,11 @@ npm start
 npm run build
 ```
 
+## Deploy
+
+The repository includes a GitHub Actions workflow in `.github/workflows/deploy.yml`.
+After merging to `master`, GitHub Pages can deploy the contents of `dist/` automatically.
+
 ## Project structure
 
 - `src/index.js` - bootstraps the app
@@ -36,5 +41,4 @@ npm run build
 ## Next improvements
 
 - Add automated tests for score calculation and trivia flow
-- Add deployment workflow for `gh-pages`
 - Add gameplay analytics or session history
