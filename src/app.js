@@ -144,6 +144,16 @@ function createTriviaWarsApp(container) {
               A polished browser trivia game that mixes API consumption, game logic,
               local persistence and a stronger visual presentation.
             </p>
+            <div class="hero-kpis">
+              <div>
+                <span>Rounds</span>
+                <strong>10 questions</strong>
+              </div>
+              <div>
+                <span>Scoring</span>
+                <strong>Speed + difficulty</strong>
+              </div>
+            </div>
             <div class="hero-badges">
               <span>Vanilla JS</span>
               <span>Open Trivia DB</span>
@@ -185,6 +195,17 @@ function createTriviaWarsApp(container) {
               Recruiter-friendly version: cleaner architecture, better feedback states,
               reliable scoring and a more intentional visual system.
             </p>
+          </div>
+
+          <div class="briefing-grid">
+            <div class="briefing-item">
+              <span>Flow</span>
+              <strong>Setup -> play -> results</strong>
+            </div>
+            <div class="briefing-item">
+              <span>Persistence</span>
+              <strong>Best score stored locally</strong>
+            </div>
           </div>
 
           <form class="setup-form" id="setup-form">
@@ -286,6 +307,7 @@ function createTriviaWarsApp(container) {
     const progressWidth = ((state.currentQuestionIndex + 1) / state.questions.length) * 100;
     const isWarning = state.secondsLeft <= 5;
     const categoriesById = getCategoriesById();
+    const answerLabels = ["A", "B", "C", "D"];
 
     renderShell(`
       <main class="panel-grid play-grid">
@@ -311,9 +333,10 @@ function createTriviaWarsApp(container) {
           <div class="answers-grid">
             ${question.answers
               .map(
-                (answer) => `
+                (answer, index) => `
                   <button class="answer-button" type="button" data-answer="${escapeHtml(answer)}">
-                    ${escapeHtml(answer)}
+                    <span class="answer-label">${answerLabels[index] ?? index + 1}</span>
+                    <span class="answer-copy">${escapeHtml(answer)}</span>
                   </button>
                 `
               )
@@ -324,15 +347,15 @@ function createTriviaWarsApp(container) {
         <aside class="content-card status-card">
           <p class="section-label">Run status</p>
           <div class="status-stack">
-            <div>
+            <div class="metric-card metric-card--score">
               <span>Score</span>
               <strong>${state.score}</strong>
             </div>
-            <div>
+            <div class="metric-card">
               <span>Best score</span>
               <strong>${state.bestScore}</strong>
             </div>
-            <div>
+            <div class="metric-card metric-card--setup">
               <span>Setup</span>
               <strong>${escapeHtml(formatConfigSummary(state.config, categoriesById))}</strong>
             </div>
@@ -365,19 +388,19 @@ function createTriviaWarsApp(container) {
           </p>
 
           <div class="results-metrics">
-            <div>
+            <div class="metric-card metric-card--score">
               <span>Final score</span>
               <strong>${state.score}</strong>
             </div>
-            <div>
+            <div class="metric-card">
               <span>Accuracy</span>
               <strong>${accuracy}%</strong>
             </div>
-            <div>
+            <div class="metric-card">
               <span>Timeouts</span>
               <strong>${timedOutAnswers}</strong>
             </div>
-            <div>
+            <div class="metric-card">
               <span>Best score</span>
               <strong>${state.bestScore}</strong>
             </div>
