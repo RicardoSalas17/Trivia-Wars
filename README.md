@@ -1,2 +1,40 @@
-# Trivia-Wars
-https://ricardosalas17.github.io/Trivia-Wars/
+# Trivia Wars
+
+Star Wars inspired trivia game rebuilt as a cleaner frontend portfolio piece.
+
+Live demo: https://ricardosalas17.github.io/Trivia-Wars/
+
+## What it shows
+
+- API consumption with Open Trivia DB
+- Dynamic UI rendering in vanilla JavaScript
+- Game state management, timer, scoring and local persistence
+- Responsive interface with a clear visual direction
+- Modernized Webpack build ready for GitHub Pages
+
+## Local development
+
+```bash
+npm install
+npm start
+```
+
+## Production build
+
+```bash
+npm run build
+```
+
+## Project structure
+
+- `src/index.js` - bootstraps the app
+- `src/app.js` - UI rendering and interaction flow
+- `src/api.js` - category and trivia requests
+- `src/utils.js` - formatting, decode and score helpers
+- `src/styles/main.scss` - visual system and responsive styles
+
+## Next improvements
+
+- Add automated tests for score calculation and trivia flow
+- Add deployment workflow for `gh-pages`
+- Add gameplay analytics or session history
