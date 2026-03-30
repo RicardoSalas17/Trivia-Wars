@@ -1,17 +1,20 @@
+const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
+  entry: "./src/index.js",
+  output: {
+    filename: "main.js",
+    path: path.resolve(__dirname, "dist"),
+    publicPath: "",
+    clean: true,
+    assetModuleFilename: "assets/[name][contenthash][ext][query]",
+  },
   module: {
     rules: [
       {
-        test: /\.html/,
-        use: [
-          {
-            loader: "html-loader",
-            options: { minimize: true },
-          },
-        ],
+        test: /\.html$/i,
+        loader: "html-loader",
       },
       {
         test: /\.js$/,
@@ -24,8 +27,8 @@ module.exports = {
         },
       },
       {
-        test: /\.(png|jpg|svg|jpeg|gif)$/,
-        use: ["file-loader"],
+        test: /\.(png|jpg|svg|jpeg|gif|mp3)$/i,
+        type: "asset/resource",
       },
       {
         test: /\.scss$/,
@@ -36,11 +39,12 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/index.html",
-      filename: "./index.html",
-    }),
-    new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css",
+      filename: "index.html",
     }),
   ],
+  devServer: {
+    static: path.resolve(__dirname, "dist"),
+    hot: true,
+    port: 8080,
+  },
 };
